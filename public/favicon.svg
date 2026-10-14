@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="case" x1="8" y1="5" x2="58" y2="61" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B2831"/>
+      <stop offset="1" stop-color="#11131D"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="17" y1="14" x2="48" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A1FFCE"/>
+      <stop offset="1" stop-color="#6CE5E8"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="54" height="54" rx="17" fill="url(#case)" stroke="#A1FFCE" stroke-opacity=".7" stroke-width="2"/>
+  <rect x="15" y="13" width="34" height="17" rx="5" fill="#101923" stroke="#6CE5E8" stroke-opacity=".55"/>
+  <path d="M42 22h2" stroke="url(#screen)" stroke-linecap="round" stroke-width="3"/>
+  <g fill="#A1FFCE">
+    <rect x="15" y="36" width="8" height="7" rx="2.5" opacity=".85"/>
+    <rect x="28" y="36" width="8" height="7" rx="2.5" opacity=".85"/>
+    <rect x="41" y="36" width="8" height="7" rx="2.5" fill="#A28BFF"/>
+    <rect x="15" y="48" width="8" height="7" rx="2.5" opacity=".65"/>
+    <rect x="28" y="48" width="21" height="7" rx="2.5" opacity=".9"/>
+  </g>
+</svg>
