@@ -680,7 +680,7 @@ export default function Home() {
           <div className="eyebrow"><span className="eyebrow-line" /> YOUR POCKET-SIZED THINKING TOOL</div>
           <h1>Make every<br />number <span>glow.</span></h1>
           <p className="intro-copy">
-            A little clarity in every calculation. Simple, focused, and ready
+            A little more clarity in every calculation. Simple, focused, and ready
             whenever inspiration strikes.
           </p>
           <button
