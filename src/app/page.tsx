@@ -284,6 +284,7 @@ export default function Home() {
   const [fontSize, setFontSize] = useState<number>(100);
   const [fontSizeLoaded, setFontSizeLoaded] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
+  const [activeNav, setActiveNav] = useState<"home" | "calculator" | "history" | "formulas" | "what-if" | "about">("home");
   const [aboutOpen, setAboutOpen] = useState(false);
   const aboutRef = useRef<HTMLDivElement>(null);
   const aboutTriggerRef = useRef<HTMLButtonElement>(null);
@@ -534,6 +535,14 @@ export default function Home() {
     const nextIndex = Math.min(FONT_SIZES.length - 1, Math.max(0, currentIndex + direction));
     setFontSize(FONT_SIZES[nextIndex]);
   };
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  const selectWorkspace = (tab: typeof workspaceTab) => {
+    setWorkspaceTab(tab);
+    setActiveNav(tab);
+    scrollTo("workspace-panel");
+  };
 
   return (
     <main className="app-shell" data-theme={theme} data-focus={focusMode}>
@@ -541,12 +550,116 @@ export default function Home() {
       <div className="ambient ambient-two" aria-hidden="true" />
       <div className="noise" aria-hidden="true" />
 
-      <header className="topbar">
+      <nav className="floating-nav" aria-label="Main navigation">
+        <button
+          className={`floating-nav-item${activeNav === "home" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="Home"
+          title="Home"
+          aria-current={activeNav === "home" ? "page" : undefined}
+          onClick={() => {
+            setActiveNav("home");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10.5 8.5-7 8.5 7M5.5 9v11h5v-6h3v6h5V9" /></svg>
+        </button>
+        <button
+          className={`floating-nav-item${activeNav === "calculator" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="Calculator"
+          title="Calculator"
+          aria-current={activeNav === "calculator" ? "page" : undefined}
+          onClick={() => {
+            setActiveNav("calculator");
+            scrollTo("calculator");
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" /><path d="M8 7h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 4h2m4 0h2" /></svg>
+        </button>
+        <button
+          className={`floating-nav-item${activeNav === "history" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="Calculation history"
+          title="History"
+          aria-current={activeNav === "history" ? "page" : undefined}
+          onClick={() => selectWorkspace("history")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.1-5.6L3.5 8.5" /><path d="M3.5 4.5v4h4m4.5-1v5l3.5 2" /></svg>
+        </button>
+        <button
+          className={`floating-nav-item${activeNav === "what-if" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="What-if Lab"
+          title="What-if Lab"
+          aria-current={activeNav === "what-if" ? "page" : undefined}
+          onClick={() => selectWorkspace("what-if")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m14.8 9.2-2 5.6-5.6 2 2-5.6 5.6-2Z" /></svg>
+        </button>
+        <button
+          className={`floating-nav-item${activeNav === "formulas" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="Formula book"
+          title="Formula book"
+          aria-current={activeNav === "formulas" ? "page" : undefined}
+          onClick={() => selectWorkspace("formulas")}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17H6a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" /><path d="M8 8h8m-8 4h8m-8 4h5" /></svg>
+        </button>
+        <button
+          className={`floating-nav-item${activeNav === "about" ? " floating-nav-active" : ""}`}
+          type="button"
+          aria-label="About developer"
+          title="About developer"
+          aria-current={activeNav === "about" ? "page" : undefined}
+          onClick={() => {
+            setActiveNav("about");
+            setAboutOpen(true);
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20a7 7 0 0 1 14 0" /></svg>
+        </button>
+        <span className="floating-nav-divider" aria-hidden="true" />
+        <button
+          className="floating-nav-item floating-nav-create"
+          type="button"
+          aria-label="Start a new calculation"
+          title="New calculation"
+          onClick={() => {
+            press("clear");
+            setActiveNav("calculator");
+            scrollTo("calculator");
+          }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        </button>
+      </nav>
+
+      <header className="topbar" id="home">
         <a className="brand" href="/" aria-label="Glowy Calculator home">
           <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none">
-              <path d="M16 3.5 18.8 13l9.7 3-9.7 3-2.8 9.5L13.2 19l-9.7-3 9.7-3L16 3.5Z" />
-              <path d="m25 3 1.2 4L30 8.2 26.2 9.4 25 13l-1.2-3.6L20 8.2 23.8 7 25 3Z" />
+            <svg viewBox="0 0 64 64">
+              <defs>
+                <linearGradient id="brand-case" x1="8" y1="5" x2="58" y2="61" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#1B2831" />
+                  <stop offset="1" stopColor="#11131D" />
+                </linearGradient>
+                <linearGradient id="brand-screen" x1="17" y1="14" x2="48" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#A1FFCE" />
+                  <stop offset="1" stopColor="#6CE5E8" />
+                </linearGradient>
+              </defs>
+              <rect x="5" y="5" width="54" height="54" rx="17" fill="url(#brand-case)" stroke="#A1FFCE" strokeOpacity=".7" strokeWidth="2" />
+              <rect x="15" y="13" width="34" height="17" rx="5" fill="#101923" stroke="#6CE5E8" strokeOpacity=".55" />
+              <path d="M42 22h2" stroke="url(#brand-screen)" strokeLinecap="round" strokeWidth="3" />
+              <g fill="#A1FFCE">
+                <rect x="15" y="36" width="8" height="7" rx="2.5" opacity=".85" />
+                <rect x="28" y="36" width="8" height="7" rx="2.5" opacity=".85" />
+                <rect x="41" y="36" width="8" height="7" rx="2.5" fill="#A28BFF" />
+                <rect x="15" y="48" width="8" height="7" rx="2.5" opacity=".65" />
+                <rect x="28" y="48" width="21" height="7" rx="2.5" opacity=".9" />
+              </g>
             </svg>
           </span>
           <span className="brand-name">Glowy<span>.</span></span>
@@ -577,20 +690,6 @@ export default function Home() {
             </button>
           </div>
           <button
-            className={`focus-toggle${focusMode ? " focus-toggle-active" : ""}`}
-            type="button"
-            onClick={() => setFocusMode((current) => !current)}
-            aria-pressed={focusMode}
-            aria-label={focusMode ? "Exit focus mode" : "Enter focus mode"}
-            title={focusMode ? "Exit focus mode" : "Focus on calculator and workspace"}
-          >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d={focusMode
-                ? "M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"
-                : "M8 3H5a2 2 0 0 0-2 2v3m13 0V3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"} />
-            </svg>
-          </button>
-          <button
             className="theme-toggle"
             type="button"
             onClick={() => setTheme((current) => current === "dark" ? "light" : "dark")}
@@ -608,7 +707,6 @@ export default function Home() {
               </svg>
             )}
           </button>
-          <span className="live-indicator"><span /> READY TO CALCULATE</span>
           <span className="topbar-divider" />
           <span className="version">v1.0</span>
           <div
@@ -678,7 +776,7 @@ export default function Home() {
       <section className="workspace" aria-label="Calculator workspace">
         <div className="intro">
           <div className="eyebrow"><span className="eyebrow-line" /> YOUR POCKET-SIZED THINKING TOOL</div>
-          <h1>Make every<br />number <span>glow.</span></h1>
+          <h1>Do beyond<br />calculations<br />with <span className="neon-word">Glowy</span>.</h1>
           <p className="intro-copy">
             A little more clarity in every calculation. Simple, focused, and ready
             whenever inspiration strikes.
@@ -688,6 +786,7 @@ export default function Home() {
             type="button"
             onClick={() => {
               setWorkspaceTab("what-if");
+              setActiveNav("what-if");
               if (window.matchMedia("(max-width: 780px)").matches) {
                 workspacePanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
               }
@@ -714,26 +813,13 @@ export default function Home() {
 
         <div className="calculator-wrap">
           <div className="calculator-glow" aria-hidden="true" />
-          <section className="calculator" aria-label="Calculator">
+          <section className="calculator" id="calculator" aria-label="Calculator">
             <div className="calculator-top">
               <div className="calculator-label">
                 <span className="calculator-dot" />
                 <span>{calculatorMode === "scientific" ? "SCIENTIFIC" : "STANDARD"}</span>
               </div>
               <div className="calculator-tools">
-                {focusMode && (
-                  <button
-                    className="focus-exit"
-                    type="button"
-                    onClick={() => setFocusMode(false)}
-                    aria-label="Exit focus mode"
-                    title="Exit focus mode (Esc)"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M8 3H5a2 2 0 0 0-2 2v3m13 0V3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3" />
-                    </svg>
-                  </button>
-                )}
                 {calculatorMode === "scientific" && (
                   <div className="angle-switch" role="group" aria-label="Angle unit">
                     {(["DEG", "RAD"] as const).map((unit) => (
@@ -749,6 +835,20 @@ export default function Home() {
                     ))}
                   </div>
                 )}
+                <button
+                  className={`focus-toggle calculator-focus-toggle${focusMode ? " focus-toggle-active" : ""}`}
+                  type="button"
+                  onClick={() => setFocusMode((current) => !current)}
+                  aria-pressed={focusMode}
+                  aria-label={focusMode ? "Exit focus mode" : "Enter focus mode"}
+                  title={focusMode ? "Exit focus mode" : "Focus on calculator and workspace"}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d={focusMode
+                      ? "M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"
+                      : "M8 3H5a2 2 0 0 0-2 2v3m13 0V3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"} />
+                  </svg>
+                </button>
                 <button
                   className="backspace-button"
                   type="button"
@@ -840,7 +940,7 @@ export default function Home() {
           </section>
         </div>
 
-        <aside ref={workspacePanelRef} className="history-panel" aria-label="Calculator workspace details" tabIndex={-1}>
+        <aside id="workspace-panel" ref={workspacePanelRef} className="history-panel" aria-label="Calculator workspace details" tabIndex={-1}>
           <div className="history-heading">
             <div>
               <div className="section-kicker">YOUR WORKSPACE</div>
@@ -870,7 +970,10 @@ export default function Home() {
               type="button"
               role="tab"
               aria-selected={workspaceTab === "history"}
-              onClick={() => setWorkspaceTab("history")}
+              onClick={() => {
+                setWorkspaceTab("history");
+                setActiveNav("history");
+              }}
             >
               History
             </button>
@@ -879,7 +982,10 @@ export default function Home() {
               type="button"
               role="tab"
               aria-selected={workspaceTab === "formulas"}
-              onClick={() => setWorkspaceTab("formulas")}
+              onClick={() => {
+                setWorkspaceTab("formulas");
+                setActiveNav("formulas");
+              }}
             >
               Formulas
             </button>
@@ -888,7 +994,10 @@ export default function Home() {
               type="button"
               role="tab"
               aria-selected={workspaceTab === "what-if"}
-              onClick={() => setWorkspaceTab("what-if")}
+              onClick={() => {
+                setWorkspaceTab("what-if");
+                setActiveNav("what-if");
+              }}
             >
               What-if Lab
             </button>

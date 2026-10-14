@@ -114,6 +114,81 @@ a:focus-visible {
   animation: fade-up 600ms ease-out both;
 }
 
+.floating-nav {
+  position: fixed;
+  z-index: 60;
+  top: 50%;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 7px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(198, 210, 255, 0.13);
+  border-radius: 28px;
+  background: rgba(18, 22, 32, 0.82);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.floating-nav-item {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #8f98aa;
+  cursor: pointer;
+  transition: background 170ms ease, color 170ms ease, transform 170ms ease, box-shadow 170ms ease;
+}
+
+.floating-nav-item svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.floating-nav-item:hover {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5ebf2;
+}
+
+.floating-nav-item.floating-nav-active {
+  background: rgba(161, 255, 206, 0.14);
+  color: var(--mint);
+  box-shadow: inset 0 0 0 1px rgba(161, 255, 206, 0.1);
+}
+
+.floating-nav-divider {
+  width: 21px;
+  height: 1px;
+  margin: 2px 0;
+  background: rgba(198, 210, 255, 0.14);
+}
+
+.floating-nav-item.floating-nav-create {
+  background: linear-gradient(145deg, #47c6ff, #2787f5);
+  color: #fff;
+  box-shadow: 0 4px 13px rgba(39, 135, 245, 0.35), inset 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.floating-nav-item.floating-nav-create:hover {
+  transform: scale(1.08);
+  background: linear-gradient(145deg, #63d1ff, #3697ff);
+  box-shadow: 0 5px 17px rgba(39, 135, 245, 0.5), inset 0 1px rgba(255, 255, 255, 0.55);
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -124,21 +199,15 @@ a:focus-visible {
 
 .brand-mark {
   display: grid;
-  width: 33px;
-  height: 33px;
+  width: 38px;
+  height: 38px;
   place-items: center;
-  border: 1px solid rgba(161, 255, 206, 0.35);
-  border-radius: 11px;
-  background: rgba(161, 255, 206, 0.08);
-  box-shadow: 0 0 22px rgba(108, 229, 232, 0.12), inset 0 0 12px rgba(161, 255, 206, 0.06);
 }
 
 .brand-mark svg {
-  width: 21px;
-  stroke: var(--mint);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.35;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .brand-name {
@@ -476,6 +545,12 @@ a:focus-visible {
   border-color: rgba(161, 255, 206, 0.2);
 }
 
+.calculator-tools .calculator-focus-toggle {
+  width: 36px;
+  height: 36px;
+  flex-basis: 36px;
+}
+
 .workspace {
   display: grid;
   width: min(1100px, 100%);
@@ -737,14 +812,15 @@ a:focus-visible {
   display: grid;
   width: 36px;
   height: 36px;
+  flex: 0 0 36px;
   place-items: center;
   padding: 0;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: #838ba0;
+  border: 1px solid rgba(198, 210, 255, 0.1);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #bec7d7;
   cursor: pointer;
-  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: background 170ms ease, border-color 170ms ease, color 170ms ease, transform 180ms ease;
 }
 
 .backspace-button svg {
@@ -758,8 +834,9 @@ a:focus-visible {
 
 .backspace-button:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
+  border-color: rgba(161, 255, 206, 0.3);
+  background: rgba(161, 255, 206, 0.08);
+  color: var(--mint);
 }
 
 .display {
@@ -1562,17 +1639,80 @@ a:focus-visible {
   border-color: rgba(24, 44, 38, 0.11);
 }
 
-.app-shell[data-theme="light"] .brand-mark {
-  border-color: rgba(19, 122, 90, 0.27);
-  background: rgba(19, 122, 90, 0.07);
-  box-shadow: 0 0 18px rgba(19, 122, 90, 0.08), inset 0 0 10px rgba(19, 122, 90, 0.04);
+.app-shell[data-theme="light"] .floating-nav {
+  border-color: rgba(35, 58, 48, 0.1);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 14px 38px rgba(40, 61, 51, 0.14), inset 0 1px rgba(255, 255, 255, 0.9);
 }
 
-.app-shell[data-theme="light"] .brand-mark svg,
-.app-shell[data-theme="light"] .brand-name > span,
-.app-shell[data-theme="light"] .intro h1 > span {
+.app-shell[data-theme="light"] .floating-nav-item {
+  color: #718079;
+}
+
+.app-shell[data-theme="light"] .floating-nav-item:hover {
+  background: rgba(24, 44, 38, 0.07);
+  color: #263a30;
+}
+
+.app-shell[data-theme="light"] .floating-nav-item.floating-nav-active {
+  background: rgba(19, 122, 90, 0.1);
   color: #137a5a;
-  stroke: #137a5a;
+  box-shadow: inset 0 0 0 1px rgba(19, 122, 90, 0.09);
+}
+
+.app-shell[data-theme="light"] .floating-nav-divider {
+  background: rgba(35, 58, 48, 0.13);
+}
+
+.app-shell[data-theme="light"] .floating-nav-item.floating-nav-create {
+  color: #fff;
+}
+
+.app-shell[data-theme="light"] .brand-name > span,
+.app-shell[data-theme="light"] .intro h1 > span:not(.neon-word) {
+  color: #137a5a;
+}
+
+.intro h1 > .neon-word {
+  color: #a1ffce;
+  animation: glowy-neon-pulse 1s ease-in-out infinite;
+  text-shadow: 0 0 7px rgba(161, 255, 206, 0.9), 0 0 20px rgba(108, 229, 232, 0.65);
+}
+
+@keyframes glowy-neon-pulse {
+  0%, 100% {
+    color: #a1ffce;
+    text-shadow: 0 0 7px rgba(161, 255, 206, 0.9), 0 0 20px rgba(108, 229, 232, 0.65);
+  }
+
+  50% {
+    color: #8beaff;
+    text-shadow: 0 0 10px rgba(139, 234, 255, 0.95), 0 0 28px rgba(139, 234, 255, 0.8);
+  }
+}
+
+.app-shell[data-theme="light"] .intro h1 > .neon-word {
+  animation-name: glowy-neon-pulse-light;
+  color: #137a5a;
+  text-shadow: 0 0 7px rgba(19, 122, 90, 0.55), 0 0 18px rgba(22, 132, 124, 0.36);
+}
+
+@keyframes glowy-neon-pulse-light {
+  0%, 100% {
+    color: #137a5a;
+    text-shadow: 0 0 7px rgba(19, 122, 90, 0.55), 0 0 18px rgba(22, 132, 124, 0.36);
+  }
+
+  50% {
+    color: #16847c;
+    text-shadow: 0 0 9px rgba(22, 132, 124, 0.7), 0 0 24px rgba(22, 132, 124, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro h1 > .neon-word {
+    animation: none;
+  }
 }
 
 .app-shell[data-theme="light"] .topbar-right,
@@ -1789,12 +1929,15 @@ a:focus-visible {
 }
 
 .app-shell[data-theme="light"] .backspace-button {
-  color: #596760;
+  border-color: rgba(24, 44, 38, 0.14);
+  background: rgba(255, 255, 255, 0.68);
+  color: #53625c;
 }
 
 .app-shell[data-theme="light"] .backspace-button:hover {
-  background: rgba(24, 44, 38, 0.07);
-  color: #1b2923;
+  border-color: rgba(19, 122, 90, 0.38);
+  background: rgba(19, 122, 90, 0.08);
+  color: #137a5a;
 }
 
 .app-shell[data-theme="light"] .expression {
@@ -2125,7 +2268,7 @@ a:focus-visible {
 @media (max-width: 1050px) {
   .app-shell {
     padding-right: 4vw;
-    padding-left: 4vw;
+    padding-left: 68px;
   }
 
   .workspace {
@@ -2141,7 +2284,36 @@ a:focus-visible {
 @media (max-width: 780px) {
   .app-shell {
     min-height: 100vh;
-    padding: 0 24px;
+    padding: 0 24px 88px;
+  }
+
+  .floating-nav {
+    top: auto;
+    right: 50%;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: auto;
+    flex-direction: row;
+    gap: 3px;
+    padding: 7px 8px;
+    transform: translateX(50%);
+    border-radius: 25px;
+  }
+
+  .floating-nav-item {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .floating-nav-item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .floating-nav-divider {
+    width: 1px;
+    height: 20px;
+    margin: 0 2px;
   }
 
   .topbar {
@@ -2203,7 +2375,7 @@ a:focus-visible {
 
 @media (max-width: 480px) {
   .app-shell {
-    padding: 0 18px;
+    padding: 0 18px 88px;
   }
 
   .topbar {
@@ -2339,6 +2511,7 @@ a:focus-visible {
 
 .app-shell[data-focus="true"] > .topbar,
 .app-shell[data-focus="true"] > .page-footer,
+.app-shell[data-focus="true"] > .floating-nav,
 .app-shell[data-focus="true"] .intro {
   display: none;
 }
